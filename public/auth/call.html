@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Twitch Auth Redirect</title>
+  <script>
+    // Wait for DOM to ensure `window.location.hash` is populated
+    window.onload = async () => {
+      const hash = window.location.hash.substring(1); // remove '#'
+      const params = new URLSearchParams(hash);
+      const accessToken = params.get("access_token");
+
+      if (!accessToken) {
+        document.body.textContent = "Missing Twitch access token.";
+        return;
+      }
+
+      // 🧠 Get user info from Twitch
+      const userRes = await fetch("https://api.twitch.tv/helix/users", {
+        headers: {
+          "Client-ID": "4wwna5bmgdjffbm5k82iab5p867623",
+          "Authorization": `Bearer ${accessToken}`
+        }
+      });
+
+      const userData = await userRes.json();
+      const user = userData.data?.[0];
+
+      if (!user) {
+        document.body.textContent = "Failed to fetch Twitch user info.";
+        return;
+      }
+
+      // ✅ Redirect back to register.html with token and handle
+      const settingUrl = new URL("https://factionfrenzy.gg/settings.html");
+      console.error("URL: ", settingUrl.toString());
+      settingUrl.searchParams.set("accessToken", accessToken);
+      settingUrl.searchParams.set("streamerHandle", user.login);
+
+      window.location.href = settingUrl.toString();
+    };
+  </script>
+</head>
+<body>
+  Logging in with Twitch...
+</body>
+</html>

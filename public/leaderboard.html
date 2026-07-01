@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>House Leaderboard Overlay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 18px;
+    }
+
+
+    .font-merriweather {
+      font-family: "Merriweather", serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    }
+
+    .font-roboto {
+      font-family: "Roboto", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    }
+
+    .font-inter {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-playfair-display {
+      font-family: "Playfair Display", serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-open-sans {
+      font-family: "Open Sans", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    }
+
+    .font-lobster {
+      font-family: "Lobster", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-bebas-neue {
+      font-family: "Bebas Neue", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-ubuntu {
+      font-family: "Ubuntu", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-abril-fatface {
+      font-family: "Abril Fatface", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-alfa-slab-one {
+      font-family: "Alfa Slab One", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-barriecito {
+      font-family: "Barriecito", system-ui;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-bangers {
+      font-family: "Bangers", system-ui;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-luckiest-guy {
+      font-family: "Luckiest Guy", cursive;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-damion {
+      font-family: "Damion", cursive;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-ubik-wet-paint {
+      font-family: "Rubik Wet Paint", system-ui;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-poetsen-one {
+      font-family: "Poetsen One", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-crafty-girls {
+      font-family: "Crafty Girls", cursive;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-orbitron {
+      font-family: "Orbitron", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-press-start-2p {
+      font-family: "Press Start 2P", system-ui;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-monoton {
+      font-family: "Monoton", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-syncopate {
+      font-family: "Syncopate", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-pacifico {
+      font-family: "Pacifico", cursive;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-dynapuff {
+      font-family: "DynaPuff", system-ui;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    }
+
+    .font-fascinate {
+      font-family: "Fascinate", system-ui;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .font-limelight {
+      font-family: "Limelight", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .leaderboard {
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+    }
+    #factions {
+      display: flex;
+      gap: 0;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .faction {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, var(--cat-color), #000);
+      box-shadow: 0 0 10px var(--cat-color);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: #fff;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      text-align: left; /* override center alignment */
+      flex: 1;
+      transform-origin: top center;
+      min-height: 40px;
+      flex-shrink: 0;
+    }
+
+    .faction-name {
+      flex: 1;
+      line-height: 1.3;
+    }
+
+    .faction-points {
+      min-width: 60px;
+      text-align: right;
+    }
+
+    .feed {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #ccc;
+    }
+    .event {
+      margin-bottom: 5px;
+      opacity: 0.9;
+    }
+    @keyframes pop {
+      0%   { transform: scale(1); opacity: 0.6; }
+      50%  { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+    .faction.bump {
+      animation: pop 0.6s ease;
+    }
+    #score-popup {
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      background: #A3C7E7;
+      color: #000;
+      font-weight: 600;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+    #score-popup.show {
+      opacity: 1;
+    }
+    /* Optional directional styles */
+    #score-popup.from-top {
+      top: 0; /* Place it just under #leaderboard-wrapper */
+      transform: translateY(-20); /* Hidden below */
+      border-top: 4px solid gold;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+
+    #score-popup.show.from-top {
+      transform: translateY(0); /* Slides upward into view */
+      opacity: 1;
+    }
+    #score-popup.from-bottom {
+      border-bottom: 4px solid gold;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+    #leaderboard-wrapper {
+      position: relative;
+    }
+
+    .faction.flip-active {
+      z-index: 20;
+    }
+
+    .faction.bump .faction-points {
+      animation: colorFlash 0.6s ease;
+    }
+
+    @keyframes colorFlash {
+      0%   { color: inherit; }
+      20%  { color: #ffd700; } /* Gold flash */
+      40% { color: inherit; }
+      60%  { color: #ffd700; } /* Gold flash */
+      80% { color: inherit; }
+      100%  { color: #ffd700; }
+    }
+
+    .faction {
+      position: relative;
+      width: 265px;
+      height: 50px;
+      will-change: transform;
+    }
+    .faction-image img {
+      display: block;
+    }
+
+    .faction-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      height: 100%;
+      position: relative; /* ✅ Anchor for point-indicator */
+    }
+
+    .point-indicator {
+      position: absolute;
+      left: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: gold;
+      color: black;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+      opacity: 0;
+      animation: floatIn 0.8s ease forwards;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes floatIn {
+      0%   { transform: translateY(-50%) translateX(-10px); opacity: 0; }
+      50%  { opacity: 1; }
+      100% { transform: translateY(-50%) translateX(0); opacity: 0; }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alfa+Slab+One&family=Bangers&family=Barriecito&family=Bebas+Neue&family=Crafty+Girls&family=Damion&family=DynaPuff:wght@400..700&family=Fascinate&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Limelight&family=Lobster&family=Luckiest+Guy&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Monoton&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Orbitron:wght@400..900&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poetsen+One&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Wet+Paint&family=Syncopate:wght@400;700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="leaderboard">
+    <div id="leaderboard-wrapper">
+      <div id="factions"></div>
+    </div>
+  </div>
+  <script type="module" src="leaderboard.js"></script>
+</body>
+</html>

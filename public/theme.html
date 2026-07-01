@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Faction Frenzy - Themes & Factions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    form label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    h2, h3, h4, legend {
+      color: #fc8911;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="color"] {
+      font-size: 1em;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 0px;
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      width: 465px;
+    }
+
+    input[type="color"] {
+      height: 38px;
+      width: 50px;
+      padding: 0px;
+    }
+
+    .faction-item {
+      display: flex;
+      gap: 21px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #f8f8f8;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border: 1px #FC8911 solid;
+    }
+
+    .faction-item .preview {
+      height: 120px;
+      width: 120px;
+      object-fit: contain;
+      border: 1px solid #000;
+      border-radius: 4px;
+    }
+
+    #groupConfig {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: none;
+      margin-top: 30px;
+    }
+
+    #groupConfig.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #obsUrlContainer {
+      background: #f0f4ff;
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 2em;
+      border: 1px solid #d0d8ea;
+    }
+    .theme-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .theme-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+      width: 120px;
+    }
+
+    .theme-logo {
+      height: 80px;
+      width: 80px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .theme-name {
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .theme-tile:hover {
+      background-color: #ffead4;
+    }
+
+    .theme-tile.selected {
+      border-color: #fc8911;
+      background: #ffead4;
+    }
+
+    .removeFaction {
+      background-color: white;
+      border: 2px solid #D32F2F;
+      color: #D32F2F;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 6px 12px;
+      curser: pointer;
+      border-radius: 6px;
+      transition: 0.2s ease-in-out;
+    }
+
+    .removeFaction:hover {
+      background-color: #ffd9d9; /* Red background on hover */
+      color: white;
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      border: none;
+      border-bottom: 2px solid black; /* Twitch purple for on-brand flair */
+      background: transparent;
+      padding: 8px 0px;
+      font-size: 16px;
+      font-family: inherit;
+      color: #333;
+      outline: none;
+      transition: border-color 0.3s;
+      border-radius: 0px;
+    }
+
+    input:focus {
+      border-bottom-color: #fc8911; /* Your orange accent when active */
+    }
+
+    input::placeholder {
+      color: #aaa;
+      opacity: 1; /* Ensure placeholder is visible across browsers */
+    }
+
+    input[type="color"] {
+      appearance: none;            /* Remove OS styling */
+      border: none;                /* Strip borders */
+      padding: 0;
+      width: 50px;
+      height: 32px;
+      background: none;
+      cursor: pointer;
+    }
+
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    input[type="color"]::-webkit-color-swatch {
+      border: none;
+    }
+
+    input[type="color"]::-moz-color-swatch {
+      border: none;
+    }
+
+    button#logoutBtn {
+      margin-top: 0px;
+    }
+
+  </style>
+</head>
+<body>
+  <h3>Choose from a list of themes</h3>
+  <div id="theme-selection" class="theme-grid"></div>
+  <form id="registerForm">
+    <div id="groupConfig">
+      <h3>Customize a theme or Create your own factions</h3>
+      <div id="factions">
+        <!-- Dynamically generated or hardcoded faction blocks go here -->
+      </div>
+      <button type="button" id="addFaction">+ Add Faction</button>
+      <button id="saveThemeAsCustom">💾 Save Theme</button>
+    </div>
+  </form>
+  <div id="toast" style="
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 0.95em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 9999;
+      pointer-events: none;
+    "></div>
+  <div id="obsUrlContainer" style="display: none;">
+    <h3>Your OBS Overlay URL:</h3>
+    <p id="obsUrl"></p>
+  </div>
+  <script src="theme.js"></script>
+</body>
+</html>

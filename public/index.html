@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Sorting Hat Overlay</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #121212;
+      font-family: 'Inter', sans-serif;
+      color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 40px;
+    }
+
+    .page-container {
+      background: #ffffff;
+      max-width: 1280px;
+      width: 100%;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    #userBar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    #userAvatar {
+      height: 36px;
+      width: 36px;
+      border-radius: 50%;
+      border: 2px solid #9146FF;
+    }
+
+    #userDisplay {
+      font-weight: 600;
+    }
+
+    #loginBtn, #logoutBtn {
+      background: #9146FF;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.95em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    #loginBtn:hover, #logoutBtn:hover {
+      background: #772ce8;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.8em;
+      color: #333;
+    }
+
+    form label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="color"] {
+      font-size: 1em;
+      padding: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="text"],
+    input[type="url"] {
+      width: 465px;
+    }
+
+    input[type="color"] {
+      height: 38px;
+      width: 50px;
+      padding: 0px;
+    }
+
+    .faction-item {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: #f8f8f8;
+      border: 1px solid #ddd;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .faction-item .preview {
+      height: 120px;
+      width: 120px;
+      object-fit: contain;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background: #9146FF;
+      color: white;
+      border: none;
+      font-size: 1em;
+      padding: 0.5em 1em;
+      margin-top: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #772ce8;
+    }
+
+    #groupConfig {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      display: none;
+      margin-top: 30px;
+    }
+
+    #groupConfig.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #obsUrlContainer {
+      background: #f0f4ff;
+      border-radius: 6px;
+      padding: 16px;
+      margin-top: 2em;
+      border: 1px solid #d0d8ea;
+    }
+    .theme-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .theme-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-align: center;
+      width: 120px;
+    }
+
+    .theme-logo {
+      height: 64px;
+      width: 64px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .theme-name {
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .theme-tile:hover {
+      background-color: #f5f0ff;
+    }
+
+    .theme-tile.selected {
+      border-color: #9146FF;
+      background: #e5d9ff;
+    }
+
+    .removeCategory {
+      background-color: white;
+      border: 2px solid #D32F2F;
+      color: #D32F2F;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 6px 12px;
+      curser: pointer;
+      border-radius: 6px;
+      transition: 0.2s ease-in-out;
+    }
+
+    .removeCategory {
+      background-color: white;
+      border: 2px solid #D32F2F;
+      color: #D32F2F;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 6px 12px;
+      curser: pointer;
+      border-radius: 6px;
+      transition: 0.2s ease-in-out;
+    }
+
+    .removeCategory:hover {
+      background-color: #D32F2F; /* Red background on hover */
+      color: white;
+    }
+
+    .header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Ensures title and user controls spread across */
+      padding: 10px 0px;
+    }
+
+    .user-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px; /* Adds spacing between avatar, name, and buttons */
+    }
+
+    #userAvatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    #loginBtn, #logoutBtn {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .header_logo {
+      max-height: 200px;
+      max-width: 500px;
+    }
+
+    .twitch-login {
+      background-color: #9146FF;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .twitch-login:hover {
+      background-color: #772ce8;
+    }
+
+    .twitch-icon {
+      height: 20px;
+      width: 20px;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    li {
+      padding-bottom: 10px;
+    }
+
+    .paypal-donate {
+      display: inline-block;
+      background-color: #ffc439;
+      color: #111;
+      font-weight: bold;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: "Helvetica Neue", sans-serif;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      transition: background-color 0.2s ease;
+    }
+
+    .paypal-donate:hover {
+      background-color: #ffb347;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .paypal-donate span {
+      margin-right: 5px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div class="header-bar">
+      <img class="header_logo" src="./img/header.webp">
+      <div class="user-controls">
+        <a href="https://www.paypal.com/donate/?business=4VHUY6UAN96VQ&no_recurring=1&item_name=Support+the+plugin&currency_code=AUD" target="_blank">
+          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate with PayPal">
+        </a>
+        <button id="loginBtn" class="twitch-login">
+          <img src="https://img.icons8.com/ios11/512/FFFFFF/twitch.png" alt="Twitch" class="twitch-icon">
+          Connect with Twitch
+        </button>
+      </div>
+    </div>
+
+    <h3>Enhance Your Stream with Faction Frenzy</h3>
+    <p>
+      Engage your audience like never before! Faction Frenzy is a new plugin for your twitch stream which will turn your chat into a faction battle, driving greater engagement, and providing another way to attract viewers to continue returning to your stream. Whether it be Hogwarts Houses, WoW factions or your favourite anime series, you can automatically assign your viewers into <b>custom factions or magical houses</b>, bringing dynamic interactions and personalized overlays to your stream.  
+    </p>
+
+    <h3>How It Works</h3>
+    <ul>
+      <li>✅ <b>Connect Your Twitch Account</b> → Instant integration with your stream.</li>
+      <li>🎨 <b>Choose Your Theme</b> → Select from a growing list of available themes such as Pokemon Starters or Star Wars classes, or if you cant find a theme you like, simply create your own set of factions to suit your stream.</li>
+      <li>🪄 <b>Stream with Magic</b> → Subscribers get assigned dynamically to a faction, boosting interaction & engagement. Overlays provide a fun way of showing the chatters their allocated faction.</li>
+      <li>🏆 <b>A bit of friendly competition</b> → Overlay also available to display a small leaderboard showing that total points of each faction. The chat bot can also provide chatters with their rank within their faction based on points earned.</li>
+      <li>🎁 <b>Points are awarded</b> → Points are awarded for gifting subscriptions, cheering bits, or can be awarded by the streamer to viewers at their choosing, maybe for winning in a community game, or saying something worth rewarding :P</li>
+      <li>🤖 <b>Set and forget</b> → A chat bot is integrated into the plugin, allowing chatters to use commands to get any information they need, so streamers do need to be worried about chasing information</li>
+    </ul>
+
+    <h3>Why Streamers Love It</h3>
+    <ul>
+      <li>⚙️ <b>Effortless automation</b> → Allocation of subs to factions happens <b>live</b>, without any manual setup from the steamer.</li>
+      <li>🎨 <b>Custom branding</b> → Select themes that match your channel’s vibe, or just make your own.</li>
+      <li>💬 <b>Boost chat engagement</b> → Viewers <b>love seeing their assignments</b> in real-time, and a bit of friendly competition always encourages friendly banter</li>
+    </ul>
+
+    <h3>How do I set it up</h3>
+    <ul>
+      <li>👤 <b>Login to register</b> → Registration is super simple. Just login with your twitch details and authorise through twitch.</li>
+      <li>🎨 <b>Select a theme</b> → Select a theme, or build your own, and save your settings.</li>
+      <li>🧩 <b>Style the overlays</b> → Check out the overlays, and customise it to match your stream asthetic.</li>
+      <li>🖥️ <b>Setup your overlays</b> → Setup your overlays within your streaming software such as OBS.</li>
+      <li>⚔️ <b>Let the battle Begin</b> → You are ready to go!
+    </ul>
+
+    <script src="register.js"></script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Faction Frenzy - Themes & Factions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #121212;
+      font-family: 'Inter', sans-serif;
+      color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 40px;
+    }
+
+    .page-container {
+      background: #ffffff;
+      max-width: 1280px;
+      width: 100%;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    #userBar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    #userAvatar {
+      height: 36px;
+      width: 36px;
+      border-radius: 50%;
+      border: 2px solid #9146FF;
+    }
+
+    #userDisplay {
+      font-weight: 600;
+    }
+
+    #loginBtn, #logoutBtn {
+      background: #9146FF;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.95em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    #loginBtn:hover, #logoutBtn:hover {
+      background: #772ce8;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 1.8em;
+      color: #333;
+    }
+
+    button {
+      background: #fc8911;
+      color: black;
+      border: none;
+      font-size: 1em;
+      font-weight: 600;
+      padding: 0.5em 1em;
+      margin-top: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: black;
+      color: #fc8911;
+    }
+
+    .header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Ensures title and user controls spread across */
+      padding: 10px 0px;
+    }
+
+    .user-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px; /* Adds spacing between avatar, name, and buttons */
+    }
+
+    #userAvatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    #loginBtn, #logoutBtn {
+      padding: 8px 12px;
+      font-size: 14px;
+      margin-top: 0px;
+    }
+
+    .header_logo {
+      max-height: 200px;
+      max-width: 500px;
+    }
+
+    .tab-bar button {
+      background-color: #fc8911;
+      color: black;
+      border-bottom: 3px solid transparent;
+      font-weight: 600;
+      padding: 10px 16px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-bar button:hover {
+      color: #fc8911;
+      background-color: black;
+    }
+
+    .tab-bar button.active {
+      border-bottom: 3px solid #fc8911;
+      background-color: black;
+      color: #fc8911;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div class="header-bar">
+      <img class="header_logo" src="./img/header.webp">
+      <div class="user-controls">
+        <img id="userAvatar" src="" alt="Avatar" style="display: none;">
+        <span id="userDisplay" style="display: none;"></span>
+        <button id="loginBtn">Login</button>
+        <button id="logoutBtn" style="display: none;">Logout</button>
+      </div>
+    </div>
+    <div class="tab-bar">
+      <button data-tab="theme">Themes & Factions</button>
+      <button data-tab="campaign">Season Management</button>
+      <button data-tab="sorter_overlay_settings">Sorter Overlay Settings</button>
+      <button data-tab="leaderboard_overlay_settings">Leaderboard Overlay Settings</button>
+      <button data-tab="commands">Commands & Redemptions</button>
+    </div>
+    <div id="adminContent">Loading...</div>
+  <script src="settings.js"></script>
+</body>
+</html>
