@@ -10,34 +10,22 @@
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
+      width: 100%;
+      height: 100%;
       background: transparent;
       overflow: hidden;
       font-family: "Inter", sans-serif;
     }
+    /* The board fills the OBS browser source; rows share the space evenly */
     #board {
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       gap: 6px;
       padding: 8px;
-      width: max-content;
     }
     #board.horizontal { flex-direction: row; }
-    /* Ticker: an endlessly scrolling track containing two copies of the board */
-    #board.ticker {
-      width: 100vw;
-      padding: 8px 0;
-      overflow: hidden;
-    }
-    .track {
-      display: flex;
-      width: max-content;
-      animation: marquee linear infinite;
-    }
-    .track .half { display: flex; gap: 8px; padding-right: 8px; }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
     .frow {
       position: relative;
       display: flex;
@@ -45,17 +33,38 @@
       gap: 10px;
       padding: 4px 12px;
       border-radius: 4px;
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 0;
       transition: transform 0.6s ease;
       will-change: transform;
     }
-    .frow img { object-fit: contain; }
-    .frow .fname { flex: 1; white-space: nowrap; }
+    .frow img { height: 100%; width: auto; max-width: 40%; object-fit: contain; }
+    .frow .fname { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .frow .fpts { font-variant-numeric: tabular-nums; white-space: nowrap; }
     .frow.bump { animation: bump 0.8s ease; }
     @keyframes bump {
       0% { transform: scale(1); }
       35% { transform: scale(1.06); }
       100% { transform: scale(1); }
+    }
+    /* Ticker: an endlessly scrolling track containing copies of the board */
+    #board.ticker {
+      display: block;
+      padding: 8px 0;
+      overflow: hidden;
+    }
+    .track {
+      display: flex;
+      height: 100%;
+      width: max-content;
+      animation: marquee linear infinite;
+    }
+    .track .half { display: flex; gap: 8px; padding-right: 8px; height: 100%; }
+    #board.ticker .frow { flex: 0 0 auto; width: max-content; height: 100%; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
     /* Reserved slot between name and total; "+N" fades in without resizing the row */
     .delta {

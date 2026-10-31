@@ -50,10 +50,6 @@ const LEADERBOARD_FIELDS: FieldDef[] = [
   { key: "backgroundColor", label: "Custom background colour", type: "color" },
   { key: "fontSize", label: "Font size (px)", type: "number" },
   { key: "fontWeight", label: "Font weight", type: "number" },
-  { key: "imageWidth", label: "Image width (px)", type: "number" },
-  { key: "imageHeight", label: "Image height (px)", type: "number" },
-  { key: "rowWidth", label: "Row width (px)", type: "number" },
-  { key: "rowHeight", label: "Row height (px)", type: "number" },
   { key: "borderWidth", label: "Faction border (px)", type: "number" },
   { key: "scrollSpeed", label: "Ticker speed (px/s)", type: "number" },
   {
@@ -135,17 +131,6 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
 
     form.appendChild(el("div", { class: "row" }, reset));
     form.appendChild(el("p", { class: "hint" }, "Changes are saved and applied automatically."));
-  }
-
-  // Live size readout posted by the preview page (helps sizing the OBS source).
-  const sizeEl = document.getElementById(`${overlay}PreviewSize`);
-  if (sizeEl) {
-    window.addEventListener("message", (event) => {
-      const data = event.data;
-      if (data?.type === "overlaySize" && data.overlay === overlay) {
-        sizeEl.textContent = `Overlay content size: ${data.width} × ${data.height} px`;
-      }
-    });
   }
 
   void api.getOverlaySettings(overlay).then(({ settings }) => buildForm(settings));

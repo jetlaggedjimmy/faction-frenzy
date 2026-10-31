@@ -120,15 +120,10 @@ function buildRow(faction: Faction, delta: number): HTMLElement {
   row.style.fontFamily = `'${settings.font || "Inter"}', sans-serif`;
   row.style.fontSize = `${settings.fontSize || 14}px`;
   row.style.fontWeight = settings.fontWeight || "400";
-  row.style.height = `${settings.rowHeight || 50}px`;
-  // Ticker rows size to their content; list rows use the configured width.
-  if (layout() !== "ticker") row.style.width = `${settings.rowWidth || 265}px`;
 
   const img = document.createElement("img");
   img.src = faction.imageUrl || "/img/default.png";
   img.onerror = () => (img.src = "/img/default.png");
-  img.style.width = `${settings.imageWidth || 100}px`;
-  img.style.height = `${settings.imageHeight || 50}px`;
 
   const name = document.createElement("span");
   name.className = "fname";
@@ -276,20 +271,6 @@ function previewLoop(): void {
       f.name === target.name ? { ...f, points: f.points + Math.ceil(Math.random() * 50) } : f
     ));
   }, 2000);
-}
-
-// Report the rendered overlay size to the settings panel preview.
-if (window.parent !== window) {
-  const observer = new ResizeObserver(() => {
-    const rect = board.getBoundingClientRect();
-    window.parent.postMessage({
-      type: "overlaySize",
-      overlay: "leaderboard",
-      width: Math.round(rect.width),
-      height: Math.round(rect.height)
-    }, "*");
-  });
-  observer.observe(board);
 }
 
 void loadData().then(() => {
