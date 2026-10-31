@@ -64,6 +64,22 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
     preview.src = preview.src.split("#")[0];
   };
 
+  // Debounced auto-save: applies changes to the database, the live overlay and the preview.
+  let saveTimer: number | undefined;
+  const scheduleSave = () => {
+    window.clearTimeout(saveTimer);
+    saveTimer = window.setTimeout(async () => {
+      const updated: OverlaySettings = {};
+      for (const [key, control] of inputs) updated[key] = control.value;
+      try {
+        await api.saveOverlaySettings(overlay, updated);
+        reloadPreview();
+      } catch (err: any) {
+        toast(err.message, true);
+      }
+    }, 500);
+  };
+
   function buildForm(settings: OverlaySettings): void {
     form.replaceChildren(el("h3", {}, "Settings"));
     inputs.clear();
@@ -89,6 +105,7 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
         }) as HTMLInputElement;
       }
       inputs.set(field.key, control);
+      control.addEventListener("input", scheduleSave);
       const wrapper = el("label", {}, field.label, control);
       if (field.type === "number") {
         if (!numberGrid.parentElement) form.appendChild(numberGrid);
@@ -99,22 +116,10 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
       if (field.hint) form.appendChild(el("p", { class: "hint" }, field.hint));
     }
 
-    const save = el("button", { class: "btn primary" }, "💾 Save settings");
-    save.addEventListener("click", async () => {
-      const updated: OverlaySettings = {};
-      for (const [key, control] of inputs) updated[key] = control.value;
-      try {
-        await api.saveOverlaySettings(overlay, updated);
-        toast("Settings saved");
-        reloadPreview();
-      } catch (err: any) {
-        toast(err.message, true);
-      }
-    });
-
     const reset = el("button", { class: "btn" }, "Restore defaults");
     reset.addEventListener("click", async () => {
       if (!confirm("Restore the default settings?")) return;
+      window.clearTimeout(saveTimer);
       await api.resetOverlaySettings(overlay);
       toast("Settings restored to defaults");
       const { settings: fresh } = await api.getOverlaySettings(overlay);
@@ -122,7 +127,8 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
       reloadPreview();
     });
 
-    form.appendChild(el("div", { class: "row" }, save, reset));
+    form.appendChild(el("div", { class: "row" }, reset));
+    form.appendChild(el("p", { class: "hint" }, "Changes are saved and applied automatically."));
   }
 
   void api.getOverlaySettings(overlay).then(({ settings }) => buildForm(settings));
