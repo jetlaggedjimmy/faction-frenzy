@@ -75,6 +75,27 @@ function applyCustomCss(): void {
   style.textContent = settings.customCSS;
 }
 
+const deltaTimers = new WeakMap<HTMLElement, number>();
+
+/** Shows the +N badge on a row, restarting the animation if one is in flight. */
+function showDelta(row: HTMLElement, delta: number): void {
+  const badge = row.querySelector<HTMLElement>(".delta");
+  if (!badge) return;
+  badge.textContent = `+${delta}`;
+  badge.classList.remove("show");
+  row.classList.remove("bump");
+  void badge.offsetWidth; // force reflow so the CSS animation restarts
+  badge.classList.add("show");
+  row.classList.add("bump");
+  const pending = deltaTimers.get(row);
+  if (pending) window.clearTimeout(pending);
+  deltaTimers.set(row, window.setTimeout(() => {
+    badge.classList.remove("show");
+    badge.textContent = "";
+    row.classList.remove("bump");
+  }, 1900));
+}
+
 function buildRow(faction: Faction, delta: number): HTMLElement {
   const row = document.createElement("div");
   row.className = "frow";
@@ -108,35 +129,27 @@ function buildRow(faction: Faction, delta: number): HTMLElement {
 
   row.append(img, name, badge, pts);
 
-  if (delta > 0) {
-    badge.textContent = `+${delta}`;
-    badge.classList.add("show");
-    row.classList.add("bump");
-    setTimeout(() => {
-      badge.classList.remove("show");
-      badge.textContent = "";
-      row.classList.remove("bump");
-    }, 1900);
-  }
+  if (delta > 0) showDelta(row, delta);
   return row;
 }
 
 function render(updated: Faction[]): void {
-  const sorted = [...updated].sort((a, b) => b.points - a.points);
-  const deltas = new Map(sorted.map((f) => {
+  const mode = layout();
+  // Ticker keeps its configured order and scrolls steadily; lists rank by points.
+  const ordered = mode === "ticker" ? [...updated] : [...updated].sort((a, b) => b.points - a.points);
+  const deltas = new Map(ordered.map((f) => {
     const before = previousPoints.get(f.name);
     return [f.name, before === undefined ? 0 : f.points - before] as const;
   }));
 
-  const mode = layout();
   board.classList.toggle("horizontal", mode === "horizontal");
   board.classList.toggle("ticker", mode === "ticker");
 
-  if (mode === "ticker") renderTicker(sorted, deltas);
-  else renderList(sorted, deltas);
+  if (mode === "ticker") renderTicker(ordered, deltas);
+  else renderList(ordered, deltas);
 
-  previousPoints = new Map(sorted.map((f) => [f.name, f.points]));
-  factions = sorted;
+  previousPoints = new Map(ordered.map((f) => [f.name, f.points]));
+  factions = ordered;
 }
 
 /** FLIP-animated list: rows slide to their new ranking positions. */
@@ -165,15 +178,33 @@ function renderList(sorted: Faction[], deltas: Map<string, number>): void {
   });
 }
 
-/** Endless marquee: two copies of the board scroll left at a constant speed. */
-function renderTicker(sorted: Faction[], deltas: Map<string, number>): void {
+/**
+ * Endless marquee: two copies of the board scroll left at a constant speed.
+ * Updates happen in place so the scroll animation never restarts.
+ */
+function renderTicker(ordered: Faction[], deltas: Map<string, number>): void {
+  const key = ordered.map((f) => `${f.name}|${f.imageUrl}|${f.color}`).join("\u0000");
+  const existing = board.querySelector<HTMLElement>(".track");
+
+  if (existing && existing.dataset.key === key) {
+    for (const faction of ordered) {
+      const delta = deltas.get(faction.name) ?? 0;
+      existing.querySelectorAll<HTMLElement>(`.frow[data-name="${CSS.escape(faction.name)}"]`).forEach((row) => {
+        row.querySelector<HTMLElement>(".fpts")!.textContent = `${faction.points} pts`;
+        if (delta > 0) showDelta(row, delta);
+      });
+    }
+    return;
+  }
+
   const track = document.createElement("div");
   track.className = "track";
+  track.dataset.key = key;
   for (const copy of [0, 1]) {
     const half = document.createElement("div");
     half.className = "half";
     if (copy === 1) half.setAttribute("aria-hidden", "true");
-    half.append(...sorted.map((f) => buildRow(f, deltas.get(f.name) ?? 0)));
+    half.append(...ordered.map((f) => buildRow(f, deltas.get(f.name) ?? 0)));
     track.appendChild(half);
   }
   board.replaceChildren(track);
