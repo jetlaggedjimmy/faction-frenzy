@@ -70,13 +70,5 @@ Project layout:
 | `src/web/` | Control panel (`index.html`) and OBS overlays (`overlay.html`, `leaderboard.html`), built with Vite |
 | `src/shared/` | Types shared between main process and web UI |
 | `tools/` | `generate-presets.mjs` — builds `presets.json` from the preset image folders |
-| `legacy/` | The original Firebase-hosted web app, kept for reference |
 
 Data is stored in `%APPDATA%/faction-frenzy/faction-frenzy.sqlite`.
-
-## Migrating from v1 (hosted)
-
-The hosted version (Firebase Hosting + Cloud Functions + Firestore + Cloud Run chat bot) lives in
-[`legacy/`](legacy). v2 is single-streamer by design; Firestore data is not migrated automatically.
-Viewers keep nothing — factions, points and seasons start fresh (or recreate them manually from the
-Firestore console).
