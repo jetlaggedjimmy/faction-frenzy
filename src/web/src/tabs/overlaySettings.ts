@@ -139,9 +139,11 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
   const widthInput = document.getElementById(`${overlay}PreviewW`) as HTMLInputElement | null;
   const heightInput = document.getElementById(`${overlay}PreviewH`) as HTMLInputElement | null;
   if (box && widthInput && heightInput) {
+    // offsetWidth/Height include the box border (box-sizing: border-box), so
+    // values round-trip exactly; never overwrite an input while it's focused.
     const syncInputs = () => {
-      widthInput.value = String(box.clientWidth);
-      heightInput.value = String(box.clientHeight);
+      if (document.activeElement !== widthInput) widthInput.value = String(box.offsetWidth);
+      if (document.activeElement !== heightInput) heightInput.value = String(box.offsetHeight);
     };
     new ResizeObserver(syncInputs).observe(box);
     syncInputs();
@@ -149,11 +151,18 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
     const applyInputs = () => {
       const width = Number(widthInput.value);
       const height = Number(heightInput.value);
-      if (width >= 100) box.style.width = `${width}px`;
-      if (height >= 60) box.style.height = `${height}px`;
+      if (width >= 100 && width <= 8000) box.style.width = `${width}px`;
+      if (height >= 60 && height <= 8000) box.style.height = `${height}px`;
     };
-    widthInput.addEventListener("input", applyInputs);
-    heightInput.addEventListener("input", applyInputs);
+    const forceSync = () => {
+      widthInput.value = String(box.offsetWidth);
+      heightInput.value = String(box.offsetHeight);
+    };
+    for (const input of [widthInput, heightInput]) {
+      input.addEventListener("input", applyInputs);
+      // On blur/Enter, snap the fields back to the real box size (clamps out-of-range values).
+      input.addEventListener("change", forceSync);
+    }
   }
 
   void api.getOverlaySettings(overlay).then(({ settings }) => buildForm(settings));
