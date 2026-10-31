@@ -156,7 +156,14 @@
           <div class="card" id="sorterForm"></div>
           <div class="card preview-card">
             <h3>Preview</h3>
-            <iframe id="sorterPreview" src="/overlay.html?preview=true" title="Sorter preview"></iframe>
+            <div class="row preview-size-row">
+              <label class="inline">Width <input id="sorterPreviewW" type="number" min="100" /></label>
+              <label class="inline">Height <input id="sorterPreviewH" type="number" min="60" /></label>
+              <span class="hint">Match your OBS browser-source size, or drag the corner.</span>
+            </div>
+            <div class="preview-box" id="sorterPreviewBox">
+              <iframe id="sorterPreview" src="/overlay.html?preview=true" title="Sorter preview"></iframe>
+            </div>
           </div>
         </div>
       </section>
@@ -168,8 +175,14 @@
           <div class="card" id="leaderboardForm"></div>
           <div class="card preview-card">
             <h3>Preview</h3>
-            <iframe id="leaderboardPreview" src="/leaderboard.html?preview=true" title="Leaderboard preview"></iframe>
-            <p class="hint">The overlay fills the OBS browser source — resize the source to resize the board.</p>
+            <div class="row preview-size-row">
+              <label class="inline">Width <input id="leaderboardPreviewW" type="number" min="100" /></label>
+              <label class="inline">Height <input id="leaderboardPreviewH" type="number" min="60" /></label>
+              <span class="hint">Match your OBS browser-source size, or drag the corner.</span>
+            </div>
+            <div class="preview-box" id="leaderboardPreviewBox">
+              <iframe id="leaderboardPreview" src="/leaderboard.html?preview=true" title="Leaderboard preview"></iframe>
+            </div>
           </div>
         </div>
       </section>

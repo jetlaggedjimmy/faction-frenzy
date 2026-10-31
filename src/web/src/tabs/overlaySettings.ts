@@ -133,5 +133,28 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
     form.appendChild(el("p", { class: "hint" }, "Changes are saved and applied automatically."));
   }
 
+  // Resizable preview: the box simulates the OBS browser-source dimensions.
+  // Dragging the corner updates the inputs; typing sets the box size exactly.
+  const box = document.getElementById(`${overlay}PreviewBox`);
+  const widthInput = document.getElementById(`${overlay}PreviewW`) as HTMLInputElement | null;
+  const heightInput = document.getElementById(`${overlay}PreviewH`) as HTMLInputElement | null;
+  if (box && widthInput && heightInput) {
+    const syncInputs = () => {
+      widthInput.value = String(box.clientWidth);
+      heightInput.value = String(box.clientHeight);
+    };
+    new ResizeObserver(syncInputs).observe(box);
+    syncInputs();
+
+    const applyInputs = () => {
+      const width = Number(widthInput.value);
+      const height = Number(heightInput.value);
+      if (width >= 100) box.style.width = `${width}px`;
+      if (height >= 60) box.style.height = `${height}px`;
+    };
+    widthInput.addEventListener("input", applyInputs);
+    heightInput.addEventListener("input", applyInputs);
+  }
+
   void api.getOverlaySettings(overlay).then(({ settings }) => buildForm(settings));
 }
