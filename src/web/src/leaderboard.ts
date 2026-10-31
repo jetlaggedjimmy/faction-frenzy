@@ -179,7 +179,8 @@ function renderList(sorted: Faction[], deltas: Map<string, number>): void {
 }
 
 /**
- * Endless marquee: two copies of the board scroll left at a constant speed.
+ * Endless marquee: the faction set is repeated until it fills the viewport,
+ * then duplicated so translateX(-50%) loops seamlessly with no gap.
  * Updates happen in place so the scroll animation never restarts.
  */
 function renderTicker(ordered: Faction[], deltas: Map<string, number>): void {
@@ -197,17 +198,26 @@ function renderTicker(ordered: Faction[], deltas: Map<string, number>): void {
     return;
   }
 
+  const buildHalf = (copies: number, hidden: boolean): HTMLElement => {
+    const half = document.createElement("div");
+    half.className = "half";
+    if (hidden) half.setAttribute("aria-hidden", "true");
+    for (let i = 0; i < copies; i++) {
+      half.append(...ordered.map((f) => buildRow(f, deltas.get(f.name) ?? 0)));
+    }
+    return half;
+  };
+
+  // Measure one copy of the set, then repeat it until it spans the viewport.
   const track = document.createElement("div");
   track.className = "track";
   track.dataset.key = key;
-  for (const copy of [0, 1]) {
-    const half = document.createElement("div");
-    half.className = "half";
-    if (copy === 1) half.setAttribute("aria-hidden", "true");
-    half.append(...ordered.map((f) => buildRow(f, deltas.get(f.name) ?? 0)));
-    track.appendChild(half);
-  }
+  const probe = buildHalf(1, false);
+  track.appendChild(probe);
   board.replaceChildren(track);
+  const setWidth = Math.max(probe.scrollWidth, 1);
+  const repeats = Math.max(1, Math.ceil(window.innerWidth / setWidth));
+  track.replaceChildren(buildHalf(repeats, false), buildHalf(repeats, true));
 
   // Duration depends on content width so the speed setting is in px/second.
   requestAnimationFrame(() => {
@@ -215,6 +225,18 @@ function renderTicker(ordered: Faction[], deltas: Map<string, number>): void {
     track.style.animationDuration = `${track.scrollWidth / 2 / speed}s`;
   });
 }
+
+// Rebuild the ticker when the OBS source / window size changes.
+let resizeTimer: number | undefined;
+window.addEventListener("resize", () => {
+  window.clearTimeout(resizeTimer);
+  resizeTimer = window.setTimeout(() => {
+    if (layout() !== "ticker") return;
+    const track = board.querySelector<HTMLElement>(".track");
+    if (track) track.dataset.key = "__stale__";
+    render(factions);
+  }, 200);
+});
 
 // ---------- live updates ----------
 
