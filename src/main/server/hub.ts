@@ -90,9 +90,14 @@ export function broadcastLeaderboard(factions: Faction[]): void {
 }
 
 export function broadcastSettingsChanged(overlay: OverlayKind): void {
-  for (const [socket, role] of clients.entries()) {
-    if (socket.readyState === WebSocket.OPEN && (role === overlay || role === "sorter" || role === "leaderboard")) {
-      send(socket, { type: "settingsChanged", overlay });
-    }
+  for (const [socket] of clients.entries()) {
+    if (socket.readyState === WebSocket.OPEN) send(socket, { type: "settingsChanged", overlay });
+  }
+}
+
+/** Tells every connected page (overlays and previews) that the active factions changed. */
+export function broadcastThemeChanged(): void {
+  for (const [socket] of clients.entries()) {
+    if (socket.readyState === WebSocket.OPEN) send(socket, { type: "themeChanged" });
   }
 }

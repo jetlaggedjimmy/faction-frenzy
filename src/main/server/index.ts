@@ -9,7 +9,13 @@ export function startLocalServer(): Promise<Server> {
   const app = express();
   app.use(express.json());
   app.use("/api", createApiRouter());
-  app.use(express.static(WEB_ROOT));
+  // HTML must revalidate so OBS sources and previews pick up app updates;
+  // hashed asset files remain safely cacheable.
+  app.use(express.static(WEB_ROOT, {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith(".html")) res.setHeader("Cache-Control", "no-cache");
+    }
+  }));
 
   const server = createServer(app);
   initHub(server);

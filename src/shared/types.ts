@@ -89,6 +89,7 @@ export interface StreamerProfile {
 export type WsServerMessage =
   | { type: "sort"; event: SortEvent }
   | { type: "leaderboard"; factions: Faction[] }
-  | { type: "settingsChanged"; overlay: OverlayKind };
+  | { type: "settingsChanged"; overlay: OverlayKind }
+  | { type: "themeChanged" };
 
 export type WsClientMessage = { type: "sortComplete"; event: SortEvent };

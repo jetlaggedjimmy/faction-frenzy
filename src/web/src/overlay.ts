@@ -65,15 +65,18 @@ function applySettings(): void {
 }
 
 function connect(): void {
-  if (isPreview) return;
-  ws = new WebSocket(`ws://${window.location.host}/ws?role=sorter`);
+  // Previews observe as "panel" so they never receive (and stall) real sort events.
+  const role = isPreview ? "panel" : "sorter";
+  ws = new WebSocket(`ws://${window.location.host}/ws?role=${role}`);
   ws.onmessage = (raw) => {
     const msg = JSON.parse(raw.data) as WsServerMessage;
-    if (msg.type === "sort") {
+    if (msg.type === "sort" && !isPreview) {
       queue.push(msg.event);
       void pump();
     } else if (msg.type === "settingsChanged" && msg.overlay === "sorter") {
       window.location.reload();
+    } else if (msg.type === "themeChanged") {
+      void loadData();
     }
   };
   ws.onclose = () => setTimeout(connect, 3000);
@@ -163,6 +166,6 @@ async function previewLoop(): Promise<void> {
 }
 
 void loadData().then(() => {
+  connect();
   if (isPreview) void previewLoop();
-  else connect();
 });

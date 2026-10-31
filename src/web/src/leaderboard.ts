@@ -241,11 +241,14 @@ window.addEventListener("resize", () => {
 // ---------- live updates ----------
 
 function connect(): void {
-  const ws = new WebSocket(`ws://${window.location.host}/ws?role=leaderboard`);
+  // Previews observe as "panel" so they only react to settings/theme changes.
+  const role = isPreview ? "panel" : "leaderboard";
+  const ws = new WebSocket(`ws://${window.location.host}/ws?role=${role}`);
   ws.onmessage = (raw) => {
     const msg = JSON.parse(raw.data) as WsServerMessage;
-    if (msg.type === "leaderboard") render(msg.factions);
+    if (msg.type === "leaderboard" && !isPreview) render(msg.factions);
     else if (msg.type === "settingsChanged" && msg.overlay === "leaderboard") window.location.reload();
+    else if (msg.type === "themeChanged") window.location.reload();
   };
   ws.onclose = () => setTimeout(connect, 3000);
 }
@@ -262,6 +265,6 @@ function previewLoop(): void {
 
 void loadData().then(() => {
   render(factions);
+  connect();
   if (isPreview) previewLoop();
-  else connect();
 });

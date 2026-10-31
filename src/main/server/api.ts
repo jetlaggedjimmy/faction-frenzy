@@ -4,7 +4,7 @@ import * as auth from "../twitch/auth";
 import { getEventSubState, startEventSub, stopEventSub } from "../twitch/eventsub";
 import { getPresetThemes, getThemeById } from "../services/themes";
 import { getOrAssignFaction, pickRandomFaction, triggerOverlayUpdate } from "../services/sorter";
-import { broadcastLeaderboard, broadcastSettingsChanged } from "./hub";
+import { broadcastLeaderboard, broadcastSettingsChanged, broadcastThemeChanged } from "./hub";
 import { PORT } from "../config";
 import type { OverlayKind } from "../../shared/types";
 
@@ -76,6 +76,7 @@ export function createApiRouter(): Router {
     }
     db.setFactions(factions);
     broadcastLeaderboard(db.getFactions());
+    broadcastThemeChanged();
     res.json({ success: true });
   });
 

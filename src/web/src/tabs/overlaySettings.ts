@@ -56,15 +56,11 @@ const LEADERBOARD_FIELDS: FieldDef[] = [
 
 export function initOverlaySettingsTab(overlay: OverlayKind): void {
   const form = document.getElementById(`${overlay}Form`) as HTMLElement;
-  const preview = document.getElementById(`${overlay}Preview`) as HTMLIFrameElement;
   const fields = overlay === "sorter" ? SORTER_FIELDS : LEADERBOARD_FIELDS;
   const inputs = new Map<string, HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>();
 
-  const reloadPreview = () => {
-    preview.src = preview.src.split("#")[0];
-  };
-
-  // Debounced auto-save: applies changes to the database, the live overlay and the preview.
+  // Debounced auto-save: the server broadcasts the change, which reloads
+  // live overlays and the preview iframe over the WebSocket.
   let saveTimer: number | undefined;
   const scheduleSave = () => {
     window.clearTimeout(saveTimer);
@@ -73,7 +69,6 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
       for (const [key, control] of inputs) updated[key] = control.value;
       try {
         await api.saveOverlaySettings(overlay, updated);
-        reloadPreview();
       } catch (err: any) {
         toast(err.message, true);
       }
@@ -124,7 +119,6 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
       toast("Settings restored to defaults");
       const { settings: fresh } = await api.getOverlaySettings(overlay);
       buildForm(fresh);
-      reloadPreview();
     });
 
     form.appendChild(el("div", { class: "row" }, reset));
