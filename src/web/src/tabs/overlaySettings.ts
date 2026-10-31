@@ -5,11 +5,15 @@ import { el, OVERLAY_FONTS, toast } from "../ui";
 interface FieldDef {
   key: string;
   label: string;
-  type: "font" | "number" | "color" | "css";
+  type: "select" | "number" | "color" | "css";
+  options?: [value: string, label: string][];
+  hint?: string;
 }
 
+const FONT_OPTIONS: [string, string][] = OVERLAY_FONTS.map((f) => [f, f]);
+
 const SORTER_FIELDS: FieldDef[] = [
-  { key: "font", label: "Font", type: "font" },
+  { key: "font", label: "Font", type: "select", options: FONT_OPTIONS },
   { key: "fontSize", label: "Font size (px)", type: "number" },
   { key: "fontWeight", label: "Font weight", type: "number" },
   { key: "outlineColor", label: "Outline color", type: "color" },
@@ -22,22 +26,32 @@ const SORTER_FIELDS: FieldDef[] = [
 ];
 
 const LEADERBOARD_FIELDS: FieldDef[] = [
-  { key: "font", label: "Font", type: "font" },
+  {
+    key: "layout",
+    label: "Layout",
+    type: "select",
+    options: [
+      ["vertical", "Vertical list"],
+      ["horizontal", "Horizontal row"],
+      ["ticker", "Scrolling ticker"]
+    ]
+  },
+  { key: "font", label: "Font", type: "select", options: FONT_OPTIONS },
   { key: "fontSize", label: "Font size (px)", type: "number" },
   { key: "fontWeight", label: "Font weight", type: "number" },
   { key: "imageWidth", label: "Image width (px)", type: "number" },
   { key: "imageHeight", label: "Image height (px)", type: "number" },
   { key: "rowWidth", label: "Row width (px)", type: "number" },
   { key: "rowHeight", label: "Row height (px)", type: "number" },
-  { key: "paddingTop", label: "Padding top (px)", type: "number" },
-  { key: "paddingRight", label: "Padding right (px)", type: "number" },
-  { key: "paddingBottom", label: "Padding bottom (px)", type: "number" },
-  { key: "paddingLeft", label: "Padding left (px)", type: "number" },
-  { key: "radiusTopLeft", label: "Radius top-left (px)", type: "number" },
-  { key: "radiusTopRight", label: "Radius top-right (px)", type: "number" },
-  { key: "radiusBottomRight", label: "Radius bottom-right (px)", type: "number" },
-  { key: "radiusBottomLeft", label: "Radius bottom-left (px)", type: "number" },
-  { key: "customCSS", label: "Custom CSS", type: "css" }
+  { key: "scrollSpeed", label: "Ticker speed (px/s)", type: "number" },
+  {
+    key: "customCSS",
+    label: "Custom CSS",
+    type: "css",
+    hint: "Fine-tune spacing, rounding, colors and more. Hooks: #board (container), " +
+      ".frow (row), .fname (name), .fpts (points), .delta (the +N badge). " +
+      "Example: .frow { border-radius: 12px; padding: 6px 16px; }"
+  }
 ];
 
 export function initOverlaySettingsTab(overlay: OverlayKind): void {
@@ -57,11 +71,11 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
     const numberGrid = el("div", { class: "two-col" });
     for (const field of fields) {
       let control: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-      if (field.type === "font") {
+      if (field.type === "select") {
         const select = el("select");
-        for (const font of OVERLAY_FONTS) {
-          const option = el("option", { value: font }, font) as HTMLOptionElement;
-          option.selected = settings[field.key] === font;
+        for (const [value, label] of field.options ?? []) {
+          const option = el("option", { value }, label) as HTMLOptionElement;
+          option.selected = settings[field.key] === value;
           select.appendChild(option);
         }
         control = select;
@@ -76,9 +90,13 @@ export function initOverlaySettingsTab(overlay: OverlayKind): void {
       }
       inputs.set(field.key, control);
       const wrapper = el("label", {}, field.label, control);
-      if (field.type === "number") numberGrid.appendChild(wrapper);
-      else form.appendChild(wrapper);
-      if (field.type === "font") form.appendChild(numberGrid);
+      if (field.type === "number") {
+        if (!numberGrid.parentElement) form.appendChild(numberGrid);
+        numberGrid.appendChild(wrapper);
+      } else {
+        form.appendChild(wrapper);
+      }
+      if (field.hint) form.appendChild(el("p", { class: "hint" }, field.hint));
     }
 
     const save = el("button", { class: "btn primary" }, "💾 Save settings");

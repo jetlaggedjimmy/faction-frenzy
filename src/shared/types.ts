@@ -57,6 +57,7 @@ export const DEFAULT_SORTER_SETTINGS: OverlaySettings = {
 };
 
 export const DEFAULT_LEADERBOARD_SETTINGS: OverlaySettings = {
+  layout: "vertical",
   font: "Inter",
   fontWeight: "400",
   fontSize: "14",
@@ -64,14 +65,7 @@ export const DEFAULT_LEADERBOARD_SETTINGS: OverlaySettings = {
   imageWidth: "100",
   rowHeight: "50",
   rowWidth: "265",
-  paddingTop: "4",
-  paddingRight: "12",
-  paddingBottom: "4",
-  paddingLeft: "12",
-  radiusTopLeft: "4",
-  radiusTopRight: "4",
-  radiusBottomRight: "4",
-  radiusBottomLeft: "4",
+  scrollSpeed: "40",
   customCSS: ""
 };
 

@@ -21,21 +21,56 @@
       padding: 8px;
       width: max-content;
     }
+    #board.horizontal { flex-direction: row; }
+    /* Ticker: an endlessly scrolling track containing two copies of the board */
+    #board.ticker {
+      width: 100vw;
+      padding: 8px 0;
+      overflow: hidden;
+    }
+    .track {
+      display: flex;
+      width: max-content;
+      animation: marquee linear infinite;
+    }
+    .track .half { display: flex; gap: 8px; padding-right: 8px; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
     .frow {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 10px;
+      padding: 4px 12px;
+      border-radius: 4px;
       transition: transform 0.6s ease;
       will-change: transform;
     }
     .frow img { object-fit: contain; }
-    .frow .fname { flex: 1; }
-    .frow .fpts { font-variant-numeric: tabular-nums; }
+    .frow .fname { flex: 1; white-space: nowrap; }
+    .frow .fpts { font-variant-numeric: tabular-nums; white-space: nowrap; }
     .frow.bump { animation: bump 0.8s ease; }
     @keyframes bump {
       0% { transform: scale(1); }
       35% { transform: scale(1.06); }
       100% { transform: scale(1); }
+    }
+    /* Reserved slot between name and total; "+N" fades in without resizing the row */
+    .delta {
+      min-width: 2.8em;
+      text-align: center;
+      font-weight: 800;
+      white-space: nowrap;
+      opacity: 0;
+    }
+    .delta.show { animation: deltaPop 1.8s ease-out forwards; }
+    @keyframes deltaPop {
+      0% { opacity: 0; transform: scale(0.6); }
+      15% { opacity: 1; transform: scale(1.15); }
+      75% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; }
     }
   </style>
 </head>

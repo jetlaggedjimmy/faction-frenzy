@@ -5,6 +5,8 @@ const isPreview = params.get("preview") === "true";
 
 const board = document.getElementById("board") as HTMLDivElement;
 
+type Layout = "vertical" | "horizontal" | "ticker";
+
 let settings: OverlaySettings = {};
 let factions: Faction[] = [];
 let previousPoints = new Map<string, number>();
@@ -46,6 +48,11 @@ function textColorFor(color: string): string {
 
 // ---------- rendering ----------
 
+function layout(): Layout {
+  const value = settings.layout;
+  return value === "horizontal" || value === "ticker" ? value : "vertical";
+}
+
 async function loadData(): Promise<void> {
   const [settingsRes, boardRes] = await Promise.all([
     fetch("/api/overlay-settings/leaderboard").then((r) => r.json()),
@@ -68,62 +75,79 @@ function applyCustomCss(): void {
   style.textContent = settings.customCSS;
 }
 
-function rowStyle(row: HTMLElement, faction: Faction): void {
-  const background = rowBackground(faction.color);
-  row.style.background = background;
+function buildRow(faction: Faction, delta: number): HTMLElement {
+  const row = document.createElement("div");
+  row.className = "frow";
+  row.dataset.name = faction.name;
+  row.style.background = rowBackground(faction.color);
   row.style.color = textColorFor(faction.color);
   row.style.fontFamily = `'${settings.font || "Inter"}', sans-serif`;
   row.style.fontSize = `${settings.fontSize || 14}px`;
   row.style.fontWeight = settings.fontWeight || "400";
-  row.style.width = `${settings.rowWidth || 265}px`;
   row.style.height = `${settings.rowHeight || 50}px`;
-  row.style.padding = `${settings.paddingTop || 4}px ${settings.paddingRight || 12}px ${settings.paddingBottom || 4}px ${settings.paddingLeft || 12}px`;
-  row.style.borderRadius = `${settings.radiusTopLeft || 4}px ${settings.radiusTopRight || 4}px ${settings.radiusBottomRight || 4}px ${settings.radiusBottomLeft || 4}px`;
+  // Ticker rows size to their content; list rows use the configured width.
+  if (layout() !== "ticker") row.style.width = `${settings.rowWidth || 265}px`;
+
+  const img = document.createElement("img");
+  img.src = faction.imageUrl || "/img/default.png";
+  img.onerror = () => (img.src = "/img/default.png");
+  img.style.width = `${settings.imageWidth || 100}px`;
+  img.style.height = `${settings.imageHeight || 50}px`;
+
+  const name = document.createElement("span");
+  name.className = "fname";
+  name.textContent = faction.name;
+
+  // Always present so the row width never changes when a delta appears.
+  const badge = document.createElement("span");
+  badge.className = "delta";
+
+  const pts = document.createElement("span");
+  pts.className = "fpts";
+  pts.textContent = `${faction.points} pts`;
+
+  row.append(img, name, badge, pts);
+
+  if (delta > 0) {
+    badge.textContent = `+${delta}`;
+    badge.classList.add("show");
+    row.classList.add("bump");
+    setTimeout(() => {
+      badge.classList.remove("show");
+      badge.textContent = "";
+      row.classList.remove("bump");
+    }, 1900);
+  }
+  return row;
 }
 
-/** FLIP-animated re-render: rows slide to their new ranking positions. */
 function render(updated: Faction[]): void {
   const sorted = [...updated].sort((a, b) => b.points - a.points);
+  const deltas = new Map(sorted.map((f) => {
+    const before = previousPoints.get(f.name);
+    return [f.name, before === undefined ? 0 : f.points - before] as const;
+  }));
 
-  // First: capture current positions
+  const mode = layout();
+  board.classList.toggle("horizontal", mode === "horizontal");
+  board.classList.toggle("ticker", mode === "ticker");
+
+  if (mode === "ticker") renderTicker(sorted, deltas);
+  else renderList(sorted, deltas);
+
+  previousPoints = new Map(sorted.map((f) => [f.name, f.points]));
+  factions = sorted;
+}
+
+/** FLIP-animated list: rows slide to their new ranking positions. */
+function renderList(sorted: Faction[], deltas: Map<string, number>): void {
   const oldPositions = new Map<string, DOMRect>();
   board.querySelectorAll<HTMLElement>(".frow").forEach((row) => {
     oldPositions.set(row.dataset.name!, row.getBoundingClientRect());
   });
 
-  board.replaceChildren();
-  for (const faction of sorted) {
-    const row = document.createElement("div");
-    row.className = "frow";
-    row.dataset.name = faction.name;
-    rowStyle(row, faction);
+  board.replaceChildren(...sorted.map((f) => buildRow(f, deltas.get(f.name) ?? 0)));
 
-    const img = document.createElement("img");
-    img.src = faction.imageUrl || "/img/default.png";
-    img.onerror = () => (img.src = "/img/default.png");
-    img.style.width = `${settings.imageWidth || 100}px`;
-    img.style.height = `${settings.imageHeight || 50}px`;
-
-    const name = document.createElement("span");
-    name.className = "fname";
-    name.textContent = faction.name;
-
-    const pts = document.createElement("span");
-    pts.className = "fpts";
-    pts.textContent = `${faction.points} pts`;
-
-    row.append(img, name, pts);
-    board.appendChild(row);
-
-    // Bump animation when this faction gained points
-    const before = previousPoints.get(faction.name);
-    if (before !== undefined && faction.points > before) {
-      row.classList.add("bump");
-      setTimeout(() => row.classList.remove("bump"), 900);
-    }
-  }
-
-  // Last + Invert + Play: slide from old to new position
   board.querySelectorAll<HTMLElement>(".frow").forEach((row) => {
     const old = oldPositions.get(row.dataset.name!);
     if (!old) return;
@@ -139,9 +163,26 @@ function render(updated: Faction[]): void {
       });
     }
   });
+}
 
-  previousPoints = new Map(sorted.map((f) => [f.name, f.points]));
-  factions = sorted;
+/** Endless marquee: two copies of the board scroll left at a constant speed. */
+function renderTicker(sorted: Faction[], deltas: Map<string, number>): void {
+  const track = document.createElement("div");
+  track.className = "track";
+  for (const copy of [0, 1]) {
+    const half = document.createElement("div");
+    half.className = "half";
+    if (copy === 1) half.setAttribute("aria-hidden", "true");
+    half.append(...sorted.map((f) => buildRow(f, deltas.get(f.name) ?? 0)));
+    track.appendChild(half);
+  }
+  board.replaceChildren(track);
+
+  // Duration depends on content width so the speed setting is in px/second.
+  requestAnimationFrame(() => {
+    const speed = Math.max(Number(settings.scrollSpeed) || 40, 5);
+    track.style.animationDuration = `${track.scrollWidth / 2 / speed}s`;
+  });
 }
 
 // ---------- live updates ----------
