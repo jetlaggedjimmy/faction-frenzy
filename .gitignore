@@ -71,3 +71,11 @@ functions/firebase-service-account.json
 
 # dataconnect generated files
 .dataconnect
+
+# App build output
+dist/
+release/
+
+# Local app data
+*.sqlite
+*.sqlite-journal

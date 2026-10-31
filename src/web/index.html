@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faction Frenzy</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles/panel.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/img/plus.png" alt="" class="brand-logo" onerror="this.style.display='none'" />
+        <h1>Faction<span>Frenzy</span></h1>
+      </div>
+      <nav id="nav">
+        <button class="nav-btn active" data-tab="connection">🔌 Connection</button>
+        <button class="nav-btn" data-tab="themes">🎨 Themes &amp; Factions</button>
+        <button class="nav-btn" data-tab="seasons">🗓️ Season Management</button>
+        <button class="nav-btn" data-tab="sorter">🎰 Sorter Overlay</button>
+        <button class="nav-btn" data-tab="leaderboard">🏆 Leaderboard Overlay</button>
+        <button class="nav-btn" data-tab="commands">💬 Commands</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div id="profileBox" class="profile hidden">
+          <img id="profileAvatar" src="/img/default.png" alt="" />
+          <span id="profileName"></span>
+        </div>
+        <div id="connBadge" class="badge">Checking…</div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- Connection -->
+      <section id="tab-connection" class="tab active">
+        <h2>Twitch Connection</h2>
+        <div class="card">
+          <h3>1. Twitch application</h3>
+          <p class="hint">
+            Create a Twitch application at
+            <a href="https://dev.twitch.tv/console/apps" target="_blank" rel="noreferrer">dev.twitch.tv/console/apps</a>
+            with client type <strong>Public</strong>, then paste its Client ID here. This only needs to be done once.
+          </p>
+          <div class="row">
+            <input id="clientIdInput" type="text" placeholder="Twitch Client ID" spellcheck="false" />
+            <button id="saveClientIdBtn" class="btn">Save</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>2. Link your channel</h3>
+          <div id="authUnlinked" class="hidden">
+            <button id="connectBtn" class="btn primary">Connect Twitch</button>
+          </div>
+          <div id="authPending" class="hidden">
+            <p>Go to <a id="verifyLink" href="#" target="_blank" rel="noreferrer"></a> and enter this code:</p>
+            <div class="user-code" id="userCode"></div>
+            <p class="hint">Waiting for you to authorize…</p>
+          </div>
+          <div id="authLinked" class="hidden">
+            <p>✅ Connected as <strong id="linkedName"></strong></p>
+            <div class="row">
+              <button id="disconnectBtn" class="btn danger">Disconnect</button>
+              <button id="restartEventSubBtn" class="btn">Reconnect Events</button>
+            </div>
+            <p class="hint">Twitch events: <span id="eventsubState">–</span></p>
+          </div>
+          <div id="authError" class="hidden">
+            <p class="error-text" id="authErrorMsg"></p>
+            <button id="retryConnectBtn" class="btn">Try again</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>3. OBS browser sources</h3>
+          <p class="hint">Add these as Browser Sources in OBS. They keep working while the app is open.</p>
+          <div class="row obs-row">
+            <code id="sorterUrl"></code>
+            <button class="btn" id="copySorterUrl">Copy</button>
+          </div>
+          <div class="row obs-row">
+            <code id="leaderboardUrl"></code>
+            <button class="btn" id="copyLeaderboardUrl">Copy</button>
+          </div>
+          <div class="row">
+            <button id="testSortBtn" class="btn">🎰 Send test sort</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Themes & Factions -->
+      <section id="tab-themes" class="tab">
+        <h2>Themes &amp; Factions</h2>
+        <div class="card">
+          <h3>Pick a theme</h3>
+          <div id="themeGrid" class="theme-grid"></div>
+        </div>
+        <div class="card">
+          <h3>Factions</h3>
+          <div id="factionList" class="faction-list"></div>
+          <div class="row">
+            <button id="addFactionBtn" class="btn">➕ Add faction</button>
+          </div>
+          <div class="row">
+            <button id="applyThemeBtn" class="btn primary">⚔️ Apply to channel</button>
+            <button id="saveCustomBtn" class="btn">💾 Save as custom theme</button>
+          </div>
+          <p class="hint">Applying keeps existing faction points for factions that keep their name.</p>
+        </div>
+      </section>
+
+      <!-- Seasons -->
+      <section id="tab-seasons" class="tab">
+        <h2>Season Management</h2>
+        <div class="season-grid">
+          <div class="card">
+            <h3>Current season <span id="seasonCountdown" class="pill"></span></h3>
+            <label>Name <input id="curName" type="text" /></label>
+            <label>End date <input id="curEnd" type="datetime-local" /></label>
+            <label class="check"><input id="curOngoing" type="checkbox" /> Ongoing (no end date)</label>
+            <label>Reward <input id="curReward" type="text" placeholder="What does the winning faction get?" /></label>
+            <div class="season-theme">
+              <span>Theme: <strong id="curThemeName">None</strong></span>
+              <button id="curPickTheme" class="btn small">Choose theme</button>
+            </div>
+            <div id="curFactions" class="hint"></div>
+            <button id="saveCurBtn" class="btn primary">Save current season</button>
+          </div>
+          <div class="card">
+            <h3>Next season</h3>
+            <label>Name <input id="nextName" type="text" /></label>
+            <label>Start date <input id="nextStart" type="datetime-local" /></label>
+            <label>Reward <input id="nextReward" type="text" /></label>
+            <div class="season-theme">
+              <span>Theme: <strong id="nextThemeName">None</strong></span>
+              <button id="nextPickTheme" class="btn small">Choose theme</button>
+            </div>
+            <div id="nextFactions" class="hint"></div>
+            <button id="saveNextBtn" class="btn primary">Save next season</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>End of season</h3>
+          <p class="hint">Archives the current season results and promotes the next season (applying its theme).</p>
+          <button id="archiveBtn" class="btn danger">🏁 Archive &amp; promote next season</button>
+        </div>
+      </section>
+
+      <!-- Sorter overlay settings -->
+      <section id="tab-sorter" class="tab">
+        <h2>Sorter Overlay Settings</h2>
+        <div class="settings-grid">
+          <div class="card" id="sorterForm"></div>
+          <div class="card preview-card">
+            <h3>Preview</h3>
+            <iframe id="sorterPreview" src="/overlay.html?preview=true" title="Sorter preview"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Leaderboard overlay settings -->
+      <section id="tab-leaderboard" class="tab">
+        <h2>Leaderboard Overlay Settings</h2>
+        <div class="settings-grid">
+          <div class="card" id="leaderboardForm"></div>
+          <div class="card preview-card">
+            <h3>Preview</h3>
+            <iframe id="leaderboardPreview" src="/leaderboard.html?preview=true" title="Leaderboard preview"></iframe>
+          </div>
+        </div>
+      </section>
+
+      <!-- Commands -->
+      <section id="tab-commands" class="tab">
+        <h2>Commands &amp; Redemptions</h2>
+        <div class="card">
+          <h3>Chat commands</h3>
+          <table class="commands-table">
+            <tr><th>Command</th><th>Who</th><th>What it does</th></tr>
+            <tr><td><code>!jointhebattle</code></td><td>Everyone</td><td>Assigns a random faction, or reminds an already-assigned viewer.</td></tr>
+            <tr><td><code>!myfaction</code></td><td>Everyone</td><td>Shows your faction, its rank and points, and your rank within it.</td></tr>
+            <tr><td><code>!factionstandings</code></td><td>Everyone</td><td>Shows the faction leaderboard in chat.</td></tr>
+            <tr><td><code>!award @user points</code></td><td>Mods &amp; broadcaster</td><td>Awards points to a viewer (and their faction).</td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Channel point redemptions</h3>
+          <table class="commands-table">
+            <tr><th>Reward title</th><th>Status</th><th>What it does</th></tr>
+            <tr><td><code>Respin Faction Slot</code></td><td>Live</td><td>Re-sorts the viewer into a new random faction (create this reward on Twitch with this exact title).</td></tr>
+            <tr><td>Faction Mascot Reveal</td><td>Coming soon</td><td></td></tr>
+            <tr><td>Faction Buff</td><td>Coming soon</td><td></td></tr>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Points</h3>
+          <table class="commands-table">
+            <tr><th>Action</th><th>Points</th></tr>
+            <tr><td>Subscription / resub (Tier 1)</td><td>50</td></tr>
+            <tr><td>Subscription (Tier 2 / Tier 3)</td><td>100 / 150</td></tr>
+            <tr><td>Prime sub</td><td>75</td></tr>
+            <tr><td>Gifted subs (per gift, to the gifter)</td><td>50 × tier</td></tr>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Theme picker modal (used by Seasons) -->
+  <div id="themeModal" class="modal hidden">
+    <div class="modal-box">
+      <h3>Choose a theme</h3>
+      <div id="modalThemeGrid" class="theme-grid"></div>
+      <button id="modalClose" class="btn">Cancel</button>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

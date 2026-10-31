@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Faction Frenzy — Leaderboard Overlay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alfa+Slab+One&family=Bangers&family=Barriecito&family=Bebas+Neue&family=Crafty+Girls&family=Damion&family=DynaPuff&family=Fascinate&family=Inter:wght@400;600;800&family=Limelight&family=Lobster&family=Luckiest+Guy&family=Merriweather&family=Monoton&family=Open+Sans&family=Orbitron&family=Pacifico&family=Playfair+Display&family=Poetsen+One&family=Press+Start+2P&family=Roboto&family=Rubik+Wet+Paint&family=Syncopate&family=Ubuntu&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: transparent;
+      overflow: hidden;
+      font-family: "Inter", sans-serif;
+    }
+    #board {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px;
+      width: max-content;
+    }
+    .frow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: transform 0.6s ease;
+      will-change: transform;
+    }
+    .frow img { object-fit: contain; }
+    .frow .fname { flex: 1; }
+    .frow .fpts { font-variant-numeric: tabular-nums; }
+    .frow.bump { animation: bump 0.8s ease; }
+    @keyframes bump {
+      0% { transform: scale(1); }
+      35% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div id="board"></div>
+  <script type="module" src="./src/leaderboard.ts"></script>
+</body>
+</html>

@@ -1,0 +1,823 @@
+[
+  {
+    "id": "classichorror",
+    "name": "Classic Horror",
+    "logo": "/img/presets/classichorror/chucky.png",
+    "factions": [
+      {
+        "name": "Chucky",
+        "color": "#a97560",
+        "imageUrl": "/img/presets/classichorror/chucky.png"
+      },
+      {
+        "name": "Freddy",
+        "color": "#764d41",
+        "imageUrl": "/img/presets/classichorror/freddie.png"
+      },
+      {
+        "name": "Ghostface",
+        "color": "#545156",
+        "imageUrl": "/img/presets/classichorror/ghostface.png"
+      },
+      {
+        "name": "Pennywise",
+        "color": "#ba8f79",
+        "imageUrl": "/img/presets/classichorror/it.png"
+      },
+      {
+        "name": "Jason",
+        "color": "#767262",
+        "imageUrl": "/img/presets/classichorror/jason.png"
+      },
+      {
+        "name": "Michael Myers",
+        "color": "#7f7975",
+        "imageUrl": "/img/presets/classichorror/mikemyers.png"
+      }
+    ]
+  },
+  {
+    "id": "cuteanimals",
+    "name": "Cute Animals",
+    "logo": "/img/presets/cuteanimals/bear.webp",
+    "factions": [
+      {
+        "name": "Bear",
+        "color": "#d78b62",
+        "imageUrl": "/img/presets/cuteanimals/bear.webp"
+      },
+      {
+        "name": "Bunny",
+        "color": "#dec4c7",
+        "imageUrl": "/img/presets/cuteanimals/bunny.webp"
+      },
+      {
+        "name": "Fox",
+        "color": "#e19b87",
+        "imageUrl": "/img/presets/cuteanimals/fox.webp"
+      },
+      {
+        "name": "Kitty",
+        "color": "#bfaba8",
+        "imageUrl": "/img/presets/cuteanimals/kitty.webp"
+      },
+      {
+        "name": "Panda",
+        "color": "#b3a1a1",
+        "imageUrl": "/img/presets/cuteanimals/panda.webp"
+      },
+      {
+        "name": "Penguin",
+        "color": "#ac9b97",
+        "imageUrl": "/img/presets/cuteanimals/penguin.webp"
+      },
+      {
+        "name": "Puppy",
+        "color": "#dbb5a2",
+        "imageUrl": "/img/presets/cuteanimals/puppy.webp"
+      },
+      {
+        "name": "Turtle",
+        "color": "#829269",
+        "imageUrl": "/img/presets/cuteanimals/turtle.webp"
+      },
+      {
+        "name": "Unicorn",
+        "color": "#cbb5b4",
+        "imageUrl": "/img/presets/cuteanimals/unicorn.webp"
+      }
+    ]
+  },
+  {
+    "id": "dessertdelights",
+    "name": "Dessert Delights",
+    "logo": "/img/presets/dessertdelights/dessertdelights.png",
+    "factions": [
+      {
+        "name": "Brownie",
+        "color": "#625d56",
+        "imageUrl": "/img/presets/dessertdelights/brownie.png"
+      },
+      {
+        "name": "Cupcake",
+        "color": "#d27682",
+        "imageUrl": "/img/presets/dessertdelights/cupcake.png"
+      },
+      {
+        "name": "Ice Cream",
+        "color": "#968664",
+        "imageUrl": "/img/presets/dessertdelights/icecream.png"
+      },
+      {
+        "name": "Tiramisu",
+        "color": "#8a7f68",
+        "imageUrl": "/img/presets/dessertdelights/tiramasu.png"
+      }
+    ]
+  },
+  {
+    "id": "dragonballz",
+    "name": "Dragon Ball Z",
+    "logo": "/img/presets/dragonballz/dragonball.ico",
+    "factions": [
+      {
+        "name": "Gohan",
+        "color": "#349830",
+        "imageUrl": "/img/presets/dragonballz/gohan.webp"
+      },
+      {
+        "name": "Goku",
+        "color": "#7e493c",
+        "imageUrl": "/img/presets/dragonballz/goku.webp"
+      },
+      {
+        "name": "Piccolo",
+        "color": "#7b6a8c",
+        "imageUrl": "/img/presets/dragonballz/piccolo.webp"
+      },
+      {
+        "name": "Vegeta",
+        "color": "#43405a",
+        "imageUrl": "/img/presets/dragonballz/vegeta.webp"
+      }
+    ]
+  },
+  {
+    "id": "elements",
+    "name": "Elements",
+    "logo": "/img/presets/elements/elements.png",
+    "factions": [
+      {
+        "name": "Air",
+        "color": "#a67fc3",
+        "imageUrl": "/img/presets/elements/air.png"
+      },
+      {
+        "name": "Earth",
+        "color": "#82b532",
+        "imageUrl": "/img/presets/elements/earth.png"
+      },
+      {
+        "name": "Fire",
+        "color": "#f33838",
+        "imageUrl": "/img/presets/elements/fire.png"
+      },
+      {
+        "name": "Water",
+        "color": "#00b8b8",
+        "imageUrl": "/img/presets/elements/water.png"
+      }
+    ]
+  },
+  {
+    "id": "f1",
+    "name": "Formula 1",
+    "logo": "/img/presets/f1/f1.png",
+    "factions": [
+      {
+        "name": "Alpine",
+        "color": "#353652",
+        "imageUrl": "/img/presets/f1/alpine.avif"
+      },
+      {
+        "name": "Aston Martin",
+        "color": "#293d3a",
+        "imageUrl": "/img/presets/f1/astonmartin.avif"
+      },
+      {
+        "name": "Ferrari",
+        "color": "#543439",
+        "imageUrl": "/img/presets/f1/ferrari.avif"
+      },
+      {
+        "name": "Haas",
+        "color": "#504a4d",
+        "imageUrl": "/img/presets/f1/haas.avif"
+      },
+      {
+        "name": "Kick Sauber",
+        "color": "#232d24",
+        "imageUrl": "/img/presets/f1/kicksauber.avif"
+      },
+      {
+        "name": "McLaren",
+        "color": "#47382f",
+        "imageUrl": "/img/presets/f1/mclaren.avif"
+      },
+      {
+        "name": "Mercedes",
+        "color": "#2e3337",
+        "imageUrl": "/img/presets/f1/mercedes.avif"
+      },
+      {
+        "name": "Racing Bulls",
+        "color": "#5d5155",
+        "imageUrl": "/img/presets/f1/racingbulls.avif"
+      },
+      {
+        "name": "Red Bull Racing",
+        "color": "#3d2f30",
+        "imageUrl": "/img/presets/f1/redbullracing.avif"
+      },
+      {
+        "name": "Williams",
+        "color": "#293560",
+        "imageUrl": "/img/presets/f1/williams.avif"
+      }
+    ]
+  },
+  {
+    "id": "fortnite",
+    "name": "Fortnite",
+    "logo": "/img/presets/fortnite/fortnite.png",
+    "factions": [
+      {
+        "name": "Aura",
+        "color": "#845c40",
+        "imageUrl": "/img/presets/fortnite/aura.webp"
+      },
+      {
+        "name": "Cuddle Team",
+        "color": "#af6286",
+        "imageUrl": "/img/presets/fortnite/cuddle.webp"
+      },
+      {
+        "name": "Fishstick",
+        "color": "#95785f",
+        "imageUrl": "/img/presets/fortnite/fishstick.webp"
+      },
+      {
+        "name": "Surf Witch",
+        "color": "#88595d",
+        "imageUrl": "/img/presets/fortnite/surfwitch.webp"
+      }
+    ]
+  },
+  {
+    "id": "hogwarts",
+    "name": "Hogwarts Houses",
+    "logo": "/img/presets/hogwarts/hogwarts.png",
+    "factions": [
+      {
+        "name": "Gryffindor",
+        "color": "#740001",
+        "imageUrl": "/img/presets/hogwarts/gryffindor.webp"
+      },
+      {
+        "name": "Hufflepuff",
+        "color": "#ecb939",
+        "imageUrl": "/img/presets/hogwarts/hufflepuff.webp"
+      },
+      {
+        "name": "Ravenclaw",
+        "color": "#0e1a40",
+        "imageUrl": "/img/presets/hogwarts/ravenclaw.webp"
+      },
+      {
+        "name": "Slytherin",
+        "color": "#1a472a",
+        "imageUrl": "/img/presets/hogwarts/slytherin.webp"
+      }
+    ]
+  },
+  {
+    "id": "insideout",
+    "name": "Inside Out",
+    "logo": "/img/presets/insideout/insideout.webp",
+    "factions": [
+      {
+        "name": "Anger",
+        "color": "#a1664c",
+        "imageUrl": "/img/presets/insideout/anger.png"
+      },
+      {
+        "name": "Disgust",
+        "color": "#60905b",
+        "imageUrl": "/img/presets/insideout/disgust.png"
+      },
+      {
+        "name": "Fear",
+        "color": "#695c7a",
+        "imageUrl": "/img/presets/insideout/fear.png"
+      },
+      {
+        "name": "Joy",
+        "color": "#d8c887",
+        "imageUrl": "/img/presets/insideout/joy.png"
+      },
+      {
+        "name": "Sadness",
+        "color": "#5d7ea8",
+        "imageUrl": "/img/presets/insideout/sadness.png"
+      }
+    ]
+  },
+  {
+    "id": "kawaii",
+    "name": "Kawaii",
+    "logo": "/img/presets/kawaii/kawaii.png",
+    "factions": [
+      {
+        "name": "Cupcake",
+        "color": "#d4b0c0",
+        "imageUrl": "/img/presets/kawaii/cupcake.png"
+      },
+      {
+        "name": "Ice Cream",
+        "color": "#dab0b0",
+        "imageUrl": "/img/presets/kawaii/icecream.png"
+      },
+      {
+        "name": "Popsicle",
+        "color": "#abbdcb",
+        "imageUrl": "/img/presets/kawaii/popsicle.png"
+      },
+      {
+        "name": "Rainbow",
+        "color": "#d7cbc6",
+        "imageUrl": "/img/presets/kawaii/rainbow.png"
+      },
+      {
+        "name": "Star",
+        "color": "#cac1ab",
+        "imageUrl": "/img/presets/kawaii/star.png"
+      }
+    ]
+  },
+  {
+    "id": "labubu",
+    "name": "Labubus",
+    "logo": "/img/presets/labubu/labubu.png",
+    "factions": [
+      {
+        "name": "Soymilk",
+        "color": "#e2c8a5",
+        "imageUrl": "/img/presets/labubu/soymilk.png"
+      },
+      {
+        "name": "Green Grape",
+        "color": "#acb388",
+        "imageUrl": "/img/presets/labubu/greengrape.png"
+      },
+      {
+        "name": "Sesame Bean",
+        "color": "#aea4a0",
+        "imageUrl": "/img/presets/labubu/sesamebean.png"
+      },
+      {
+        "name": "Sea Salt Coconut",
+        "color": "#9da9b5",
+        "imageUrl": "/img/presets/labubu/seasaltcoconut.png"
+      },
+      {
+        "name": "Toffee",
+        "color": "#bd9d81",
+        "imageUrl": "/img/presets/labubu/toffee.png"
+      },
+      {
+        "name": "Lychee Berry",
+        "color": "#dc919d",
+        "imageUrl": "/img/presets/labubu/lycheeberry.png"
+      }
+    ]
+  },
+  {
+    "id": "minecraftmobs",
+    "name": "Minecraft Mobs",
+    "logo": "/img/presets/minecraftmobs/creeper.png",
+    "factions": [
+      {
+        "name": "Creeper",
+        "color": "#4f8246",
+        "imageUrl": "/img/presets/minecraftmobs/creeper.png"
+      },
+      {
+        "name": "Enderman",
+        "color": "#48506b",
+        "imageUrl": "/img/presets/minecraftmobs/enderman.png"
+      },
+      {
+        "name": "Skeleton",
+        "color": "#9f9b94",
+        "imageUrl": "/img/presets/minecraftmobs/skeleton.png"
+      },
+      {
+        "name": "Slime",
+        "color": "#7a9974",
+        "imageUrl": "/img/presets/minecraftmobs/slime.png"
+      },
+      {
+        "name": "Spider",
+        "color": "#424134",
+        "imageUrl": "/img/presets/minecraftmobs/spider.png"
+      },
+      {
+        "name": "Witch",
+        "color": "#452d47",
+        "imageUrl": "/img/presets/minecraftmobs/witch.png"
+      },
+      {
+        "name": "Wither",
+        "color": "#48464a",
+        "imageUrl": "/img/presets/minecraftmobs/wither.png"
+      },
+      {
+        "name": "Zombie",
+        "color": "#41695e",
+        "imageUrl": "/img/presets/minecraftmobs/zombie.png"
+      }
+    ]
+  },
+  {
+    "id": "overwatch",
+    "name": "Overwatch Roles",
+    "logo": "/img/presets/overwatch/overwatch.png",
+    "factions": [
+      {
+        "name": "Damage",
+        "color": "#e74d53",
+        "imageUrl": "/img/presets/overwatch/damage.webp"
+      },
+      {
+        "name": "Support",
+        "color": "#3ab571",
+        "imageUrl": "/img/presets/overwatch/support.webp"
+      },
+      {
+        "name": "Tank",
+        "color": "#f6b65d",
+        "imageUrl": "/img/presets/overwatch/tank.webp"
+      }
+    ]
+  },
+  {
+    "id": "pokemonStarters",
+    "name": "Pokémon Starters",
+    "logo": "/img/presets/pokemonStarters/pokemon.png",
+    "factions": [
+      {
+        "name": "Bulbasaur",
+        "color": "#78c850",
+        "imageUrl": "/img/presets/pokemonStarters/bulbasaur.png"
+      },
+      {
+        "name": "Charmander",
+        "color": "#f08030",
+        "imageUrl": "/img/presets/pokemonStarters/charmander.png"
+      },
+      {
+        "name": "Pikachu",
+        "color": "#f8d030",
+        "imageUrl": "/img/presets/pokemonStarters/pikachu.png"
+      },
+      {
+        "name": "Squirtle",
+        "color": "#6890f0",
+        "imageUrl": "/img/presets/pokemonStarters/squirtle.png"
+      }
+    ]
+  },
+  {
+    "id": "pokemonTypes",
+    "name": "Pokémon Types",
+    "logo": "/img/presets/pokemonTypes/pokemon.png",
+    "factions": [
+      {
+        "name": "Bug",
+        "color": "#a8b820",
+        "imageUrl": "/img/presets/pokemonTypes/bug.webp"
+      },
+      {
+        "name": "Dark",
+        "color": "#705848",
+        "imageUrl": "/img/presets/pokemonTypes/dark.webp"
+      },
+      {
+        "name": "Dragon",
+        "color": "#7038f8",
+        "imageUrl": "/img/presets/pokemonTypes/dragon.webp"
+      },
+      {
+        "name": "Electric",
+        "color": "#f8d030",
+        "imageUrl": "/img/presets/pokemonTypes/electric.webp"
+      },
+      {
+        "name": "Fairy",
+        "color": "#ee99ac",
+        "imageUrl": "/img/presets/pokemonTypes/fairy.webp"
+      },
+      {
+        "name": "Fighting",
+        "color": "#c03028",
+        "imageUrl": "/img/presets/pokemonTypes/fighting.webp"
+      },
+      {
+        "name": "Fire",
+        "color": "#f08030",
+        "imageUrl": "/img/presets/pokemonTypes/fire.webp"
+      },
+      {
+        "name": "Flying",
+        "color": "#a890f0",
+        "imageUrl": "/img/presets/pokemonTypes/flying.webp"
+      },
+      {
+        "name": "Ghost",
+        "color": "#705898",
+        "imageUrl": "/img/presets/pokemonTypes/ghost.webp"
+      },
+      {
+        "name": "Grass",
+        "color": "#78c850",
+        "imageUrl": "/img/presets/pokemonTypes/grass.webp"
+      },
+      {
+        "name": "Ground",
+        "color": "#e0c068",
+        "imageUrl": "/img/presets/pokemonTypes/ground.webp"
+      },
+      {
+        "name": "Ice",
+        "color": "#98d8d8",
+        "imageUrl": "/img/presets/pokemonTypes/ice.webp"
+      },
+      {
+        "name": "Normal",
+        "color": "#a8a878",
+        "imageUrl": "/img/presets/pokemonTypes/normal.webp"
+      },
+      {
+        "name": "Poison",
+        "color": "#a040a0",
+        "imageUrl": "/img/presets/pokemonTypes/poison.webp"
+      },
+      {
+        "name": "Psychic",
+        "color": "#f85888",
+        "imageUrl": "/img/presets/pokemonTypes/psychic.webp"
+      },
+      {
+        "name": "Rock",
+        "color": "#b8a038",
+        "imageUrl": "/img/presets/pokemonTypes/rock.webp"
+      },
+      {
+        "name": "Steel",
+        "color": "#b8b8d0",
+        "imageUrl": "/img/presets/pokemonTypes/steel.webp"
+      },
+      {
+        "name": "Water",
+        "color": "#6890f0",
+        "imageUrl": "/img/presets/pokemonTypes/water.webp"
+      }
+    ]
+  },
+  {
+    "id": "redvsblue",
+    "name": "Red vs Blue",
+    "logo": "/img/presets/redvsblue/RvB.webp",
+    "factions": [
+      {
+        "name": "Red Team",
+        "color": "#d62828",
+        "imageUrl": "/img/presets/redvsblue/red.png"
+      },
+      {
+        "name": "Blue Team",
+        "color": "#1d6fd6",
+        "imageUrl": "/img/presets/redvsblue/blue.png"
+      }
+    ]
+  },
+  {
+    "id": "seasons",
+    "name": "Seasons",
+    "logo": "/img/presets/seasons/seasons.png",
+    "factions": [
+      {
+        "name": "Autumn",
+        "color": "#f97633",
+        "imageUrl": "/img/presets/seasons/seasons_autumn.png"
+      },
+      {
+        "name": "Spring",
+        "color": "#5e9d36",
+        "imageUrl": "/img/presets/seasons/seasons_spring.png"
+      },
+      {
+        "name": "Summer",
+        "color": "#f1b92e",
+        "imageUrl": "/img/presets/seasons/seasons_summer.png"
+      },
+      {
+        "name": "Winter",
+        "color": "#0085b4",
+        "imageUrl": "/img/presets/seasons/seasons_winter.png"
+      }
+    ]
+  },
+  {
+    "id": "sharks",
+    "name": "Sharks",
+    "logo": "/img/presets/sharks/sharks.png",
+    "factions": [
+      {
+        "name": "Great White",
+        "color": "#858a97",
+        "imageUrl": "/img/presets/sharks/greatwhite.png"
+      },
+      {
+        "name": "Hammerhead",
+        "color": "#769aa8",
+        "imageUrl": "/img/presets/sharks/hammerhead.png"
+      },
+      {
+        "name": "Tiger Shark",
+        "color": "#bd7151",
+        "imageUrl": "/img/presets/sharks/tiger.png"
+      },
+      {
+        "name": "Whale Shark",
+        "color": "#8590a1",
+        "imageUrl": "/img/presets/sharks/whale.png"
+      }
+    ]
+  },
+  {
+    "id": "snackattack",
+    "name": "Snack Attack",
+    "logo": "/img/presets/snackattack/snackattack.png",
+    "factions": [
+      {
+        "name": "Burger",
+        "color": "#b87c54",
+        "imageUrl": "/img/presets/snackattack/burger.png"
+      },
+      {
+        "name": "Donut",
+        "color": "#cb7d92",
+        "imageUrl": "/img/presets/snackattack/donut.png"
+      },
+      {
+        "name": "Fries",
+        "color": "#cb9980",
+        "imageUrl": "/img/presets/snackattack/fries.png"
+      },
+      {
+        "name": "Hot Dog",
+        "color": "#ca947c",
+        "imageUrl": "/img/presets/snackattack/hotdog.png"
+      },
+      {
+        "name": "Pizza",
+        "color": "#ce9361",
+        "imageUrl": "/img/presets/snackattack/pizza.png"
+      }
+    ]
+  },
+  {
+    "id": "starwars",
+    "name": "Star Wars",
+    "logo": "/img/presets/starwars/starwars.png",
+    "factions": [
+      {
+        "name": "Rebel Alliance",
+        "color": "#c8102e",
+        "imageUrl": "/img/presets/starwars/alliance.webp"
+      },
+      {
+        "name": "Galactic Empire",
+        "color": "#4a4f55",
+        "imageUrl": "/img/presets/starwars/empire.webp"
+      },
+      {
+        "name": "Jedi",
+        "color": "#2e67f8",
+        "imageUrl": "/img/presets/starwars/Jedi.webp"
+      },
+      {
+        "name": "Sith",
+        "color": "#b1060f",
+        "imageUrl": "/img/presets/starwars/Sith.webp"
+      }
+    ]
+  },
+  {
+    "id": "stardew",
+    "name": "Stardew Valley",
+    "logo": "/img/presets/stardew/stardew.png",
+    "factions": [
+      {
+        "name": "Abigail",
+        "color": "#6e4f9b",
+        "imageUrl": "/img/presets/stardew/abigail.webp"
+      },
+      {
+        "name": "Alex",
+        "color": "#7e4a1f",
+        "imageUrl": "/img/presets/stardew/alex.webp"
+      },
+      {
+        "name": "Elliott",
+        "color": "#a64a2a",
+        "imageUrl": "/img/presets/stardew/elliott.webp"
+      },
+      {
+        "name": "Emily",
+        "color": "#88478a",
+        "imageUrl": "/img/presets/stardew/emily.webp"
+      },
+      {
+        "name": "Haley",
+        "color": "#d28f6f",
+        "imageUrl": "/img/presets/stardew/haley.webp"
+      },
+      {
+        "name": "Harvey",
+        "color": "#6d5446",
+        "imageUrl": "/img/presets/stardew/harvey.webp"
+      },
+      {
+        "name": "Leah",
+        "color": "#b66c61",
+        "imageUrl": "/img/presets/stardew/leah.webp"
+      },
+      {
+        "name": "Maru",
+        "color": "#813761",
+        "imageUrl": "/img/presets/stardew/maru.webp"
+      },
+      {
+        "name": "Penny",
+        "color": "#d68362",
+        "imageUrl": "/img/presets/stardew/penny.webp"
+      },
+      {
+        "name": "Sam",
+        "color": "#a87a64",
+        "imageUrl": "/img/presets/stardew/sam.webp"
+      },
+      {
+        "name": "Sebastian",
+        "color": "#613753",
+        "imageUrl": "/img/presets/stardew/sebastian.webp"
+      },
+      {
+        "name": "Shane",
+        "color": "#656b78",
+        "imageUrl": "/img/presets/stardew/shane.webp"
+      }
+    ]
+  },
+  {
+    "id": "valorant",
+    "name": "Valorant Roles",
+    "logo": "/img/presets/valorant/valorant.webp",
+    "factions": [
+      {
+        "name": "Controller",
+        "color": "#ffffff",
+        "imageUrl": "/img/presets/valorant/controller.webp"
+      },
+      {
+        "name": "Duelist",
+        "color": "#ffffff",
+        "imageUrl": "/img/presets/valorant/duelist.webp"
+      },
+      {
+        "name": "Initiator",
+        "color": "#ffffff",
+        "imageUrl": "/img/presets/valorant/initiator.webp"
+      },
+      {
+        "name": "Sentinel",
+        "color": "#ffffff",
+        "imageUrl": "/img/presets/valorant/sentinel.webp"
+      }
+    ]
+  },
+  {
+    "id": "wowfactions",
+    "name": "WoW Factions",
+    "logo": "/img/presets/wowfactions/wow.png",
+    "factions": [
+      {
+        "name": "Alliance",
+        "color": "#0078ff",
+        "imageUrl": "/img/presets/wowfactions/alliance.webp"
+      },
+      {
+        "name": "Horde",
+        "color": "#b30000",
+        "imageUrl": "/img/presets/wowfactions/horde.webp"
+      },
+      {
+        "name": "Scourge",
+        "color": "#64e08c",
+        "imageUrl": "/img/presets/wowfactions/scourge.webp"
+      }
+    ]
+  }
+]
