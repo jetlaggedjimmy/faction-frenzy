@@ -66,6 +66,9 @@ export const DEFAULT_LEADERBOARD_SETTINGS: OverlaySettings = {
   rowHeight: "50",
   rowWidth: "265",
   scrollSpeed: "40",
+  borderWidth: "0",
+  background: "faction",
+  backgroundColor: "#1e1e29",
   customCSS: ""
 };
 

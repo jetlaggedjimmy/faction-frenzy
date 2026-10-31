@@ -100,8 +100,23 @@ function buildRow(faction: Faction, delta: number): HTMLElement {
   const row = document.createElement("div");
   row.className = "frow";
   row.dataset.name = faction.name;
-  row.style.background = rowBackground(faction.color);
-  row.style.color = textColorFor(faction.color);
+
+  const bgMode = settings.background || "faction";
+  if (bgMode === "transparent") {
+    row.style.background = "transparent";
+    row.style.color = "#ffffff";
+  } else if (bgMode === "custom") {
+    const color = settings.backgroundColor || "#1e1e29";
+    row.style.background = color;
+    row.style.color = textColorFor(color);
+  } else {
+    row.style.background = rowBackground(faction.color);
+    row.style.color = textColorFor(faction.color);
+  }
+
+  const borderWidth = Number(settings.borderWidth) || 0;
+  if (borderWidth > 0) row.style.border = `${borderWidth}px solid ${faction.color}`;
+
   row.style.fontFamily = `'${settings.font || "Inter"}', sans-serif`;
   row.style.fontSize = `${settings.fontSize || 14}px`;
   row.style.fontWeight = settings.fontWeight || "400";
@@ -261,6 +276,20 @@ function previewLoop(): void {
       f.name === target.name ? { ...f, points: f.points + Math.ceil(Math.random() * 50) } : f
     ));
   }, 2000);
+}
+
+// Report the rendered overlay size to the settings panel preview.
+if (window.parent !== window) {
+  const observer = new ResizeObserver(() => {
+    const rect = board.getBoundingClientRect();
+    window.parent.postMessage({
+      type: "overlaySize",
+      overlay: "leaderboard",
+      width: Math.round(rect.width),
+      height: Math.round(rect.height)
+    }, "*");
+  });
+  observer.observe(board);
 }
 
 void loadData().then(() => {
